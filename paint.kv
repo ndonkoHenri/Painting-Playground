@@ -1,0 +1,113 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import get_random_color kivy.utils.get_random_color
+
+<ColorButton>
+    group: "color"
+    # remove the possibility of all the toggle buttons being deselected
+    allow_no_selection: False
+    hex: "#000000"
+    background_color: get_color_from_hex(self.hex)
+    background_normal: ""
+#    background_down: ""
+    border: (3,3,3,3)
+    on_release: app.canvas_widget.set_canvas_color(self.hex)
+
+<LineTypeButton>
+    group: "thickness"
+    # remove the possibility of all the toggle buttons being deselected
+    allow_no_selection: False
+    # a random background color for each button
+    background_color: get_random_color()
+    background_normal: ""
+
+<CanvasWidget>:
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding:
+        spacing: 3
+        top: root.top
+        id: box_line
+
+        width: 65
+        # we create a new property named thickness referring to the thickness of our line in the canvas
+        LineTypeButton:
+            text: "Thin"
+            # we set the initial state as thin
+            state: 'down'
+            thickness: 1
+            on_release: root.line_thickness = self.thickness
+        LineTypeButton:
+            text: "Normal"
+            thickness: 2
+            on_release: root.line_thickness = self.thickness
+        LineTypeButton:
+            text: "Thick"
+            thickness: 3
+            on_release: root.line_thickness = self.thickness
+
+    MDFillRoundFlatIconButton:
+        # a button to clear the canvas
+        icon: "delete"
+        text: 'Clear Canvas'
+        md_bg_color: 1,0,0,1
+        top: root.top - dp(6)
+        right: root.right - dp(2)
+        # clears the drawings on the canvas
+        on_release: root.clear_canvas()
+
+
+
+    MDBoxLayout:
+        orientation: 'vertical'
+        center_x: root.center_x
+#        padding: 00, 00, 00, 8
+        spacing: 3
+        border: (3,3,3,3)
+        x:0
+        width: 350
+        MDRectangleFlatIconButton:
+            id: btn_color_picker
+            icon: "pencil"
+            theme_icon_color: "Custom"
+            icon_color: 0,0,0,1
+            text: "Open Color Picker"
+            theme_text_color: "Custom"
+            text_color: 0, 0, 0, 1
+            pos_hint: {"center_x": .5}
+            line_color: 0,0,0,1
+            on_release: root.open_color_picker()
+
+
+        # Colors Layout
+        MDBoxLayout:
+            orientation: 'horizontal'
+            padding: 00, 00, 00, 8
+            spacing: 3
+            size_hint_y: None
+            height:36
+
+
+            ColorButton:
+                state: 'down'
+                hex: "#000000"
+            ColorButton:
+                hex: "#16A085"
+            ColorButton:
+                hex: "#27AE60"
+            ColorButton:
+                hex: "#2980B9"
+            ColorButton:
+                hex: "#8E44AD"
+            ColorButton:
+                hex: "#2C3E50"
+            ColorButton:
+                hex: "#F39C12"
+            ColorButton:
+                hex: "#D35400"
+            ColorButton:
+                hex: "#C0392B"
+            ColorButton:
+                hex: "#E67E22"
+            ColorButton:
+                hex: "#95A5A6"
